@@ -7,7 +7,7 @@ class Api::V1::PresencasController < ApplicationController
     unless dispositivo
       return render json: {
         sucesso: false,
-        mensagem: "Dispositivo não autorizado."
+        mensagem: "Dispositivo não Autorizado."
       }, status: :unauthorized
     end
 
