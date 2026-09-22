@@ -1,0 +1,23 @@
+<div class="max-w-4xl mx-auto">
+
+  <div class="text-sm text-slate-500 mb-5">
+    <%= link_to "Turmas", turmas_path, class: "hover:text-blue-600" %>
+    <span class="mx-2">›</span>
+    <%= link_to @turma.nome, turma_path(@turma), class: "hover:text-blue-600" %>
+    <span class="mx-2">›</span>
+    Editar
+  </div>
+
+  <div class="mb-7">
+    <h1 class="text-3xl font-bold text-slate-900">Editar turma</h1>
+
+    <p class="text-slate-500 mt-2">
+      Atualize as informações da turma.
+    </p>
+  </div>
+
+  <div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-6 md:p-8">
+    <%= render "form", turma: @turma %>
+  </div>
+
+</div>

@@ -1,0 +1,79 @@
+<div class="w-full max-w-5xl mx-auto">
+
+  <div class="flex items-center justify-between mb-5">
+
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900">
+        Dispositivos
+      </h1>
+
+      <p class="text-sm text-slate-500 mt-1">
+        Leitores NFC cadastrados no sistema.
+      </p>
+    </div>
+
+    <%= link_to "+ Novo dispositivo",
+        new_dispositivo_path,
+        class: "px-3 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-sm font-medium text-slate-700" %>
+
+  </div>
+
+
+  <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
+
+    <% if @dispositivos.any? %>
+
+      <div class="divide-y divide-slate-100">
+
+        <% @dispositivos.each do |dispositivo| %>
+
+          <%= link_to dispositivo_path(dispositivo),
+              class: "flex items-center justify-between gap-4 px-5 py-4 hover:bg-slate-50" do %>
+
+            <div>
+
+              <p class="text-sm font-semibold text-slate-800">
+                <%= dispositivo.nome %>
+              </p>
+
+              <p class="text-xs text-slate-400 mt-1">
+                <%= dispositivo.identificador %>
+              </p>
+
+            </div>
+
+
+            <% if dispositivo.ativo? %>
+
+              <span class="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                Ativo
+              </span>
+
+            <% else %>
+
+              <span class="text-xs text-slate-400">
+                Inativo
+              </span>
+
+            <% end %>
+
+          <% end %>
+
+        <% end %>
+
+      </div>
+
+    <% else %>
+
+      <div class="p-10 text-center">
+        <p class="text-sm text-slate-500">
+          Nenhum dispositivo cadastrado.
+        </p>
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>

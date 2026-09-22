@@ -1,0 +1,99 @@
+<div class="max-w-6xl mx-auto">
+
+  <!-- BREADCRUMB -->
+  <div class="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-6">
+
+    <%= link_to "Alunos",
+        alunos_path,
+        class: "hover:text-blue-600 transition" %>
+
+    <span class="text-slate-300">/</span>
+
+    <%= link_to @aluno.nome,
+        aluno_path(@aluno),
+        class: "hover:text-blue-600 transition" %>
+
+    <span class="text-slate-300">/</span>
+
+    <span class="font-medium text-slate-800">
+      Editar
+    </span>
+
+  </div>
+
+
+  <!-- CABEÇALHO -->
+  <div class="flex flex-col md:flex-row md:items-center
+              md:justify-between gap-5 mb-8">
+
+    <div class="flex items-center gap-4">
+
+      <div class="w-14 h-14 rounded-2xl
+                  bg-blue-600 text-white
+                  flex items-center justify-center shadow-sm">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke-width="1.8"
+             stroke="currentColor"
+             class="w-7 h-7">
+
+          <path stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16.862 4.487l1.687-1.688
+                   a1.875 1.875 0 112.652 2.652
+                   L10.582 16.07a4.5 4.5 0
+                   01-1.897 1.13L6 18l.8-2.685
+                   a4.5 4.5 0 011.13-1.897
+                   l8.932-8.931z" />
+
+          <path stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 7.125L16.862 4.487
+                   M18 14.25v4.125
+                   c0 1.036-.84 1.875-1.875 1.875
+                   H5.625A1.875 1.875 0
+                   013.75 18.375V7.875
+                   C3.75 6.839 4.59 6 5.625 6H9.75" />
+
+        </svg>
+
+      </div>
+
+
+      <div>
+
+        <h1 class="text-3xl font-bold tracking-tight text-slate-900">
+          Editar aluno
+        </h1>
+
+        <p class="text-slate-500 mt-1">
+          Atualize os dados de
+          <span class="font-semibold text-slate-700">
+            <%= @aluno.nome %>
+          </span>.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <%= link_to aluno_path(@aluno),
+        class: "inline-flex items-center justify-center
+                gap-2 border border-slate-300 bg-white
+                hover:bg-slate-50 text-slate-700
+                px-5 py-3 rounded-xl font-semibold transition" do %>
+
+      ← Voltar ao perfil
+
+    <% end %>
+
+  </div>
+
+
+  <!-- FORMULÁRIO -->
+  <%= render "form", aluno: @aluno %>
+
+</div>

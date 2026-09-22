@@ -1,0 +1,466 @@
+<div class="w-full max-w-4xl mx-auto">
+
+  <!-- BREADCRUMB -->
+  <nav class="flex items-center gap-2 text-xs text-slate-500 mb-5 overflow-hidden">
+
+    <%= link_to "Alunos",
+        alunos_path,
+        class: "hover:text-blue-600 transition shrink-0" %>
+
+    <span class="text-slate-300">/</span>
+
+    <%= link_to @aluno.turma.nome,
+        turma_path(@aluno.turma),
+        class: "hover:text-blue-600 transition truncate" %>
+
+    <span class="text-slate-300">/</span>
+
+    <span class="text-slate-700 font-medium truncate">
+      <%= @aluno.nome %>
+    </span>
+
+  </nav>
+
+
+  <!-- PERFIL -->
+  <div class="bg-white border border-slate-200 rounded-xl shadow-sm mb-5">
+
+    <div class="p-5 sm:p-6">
+
+      <div class="flex flex-col sm:flex-row sm:items-center
+                  sm:justify-between gap-5">
+
+        <!-- ALUNO -->
+        <div class="flex items-center gap-4 min-w-0">
+
+         <!-- FOTO PEQUENA -->
+<% if @aluno.foto.attached? %>
+
+  <%= image_tag @aluno.foto,
+      class: "w-11 h-11 rounded-lg
+              object-cover border border-slate-200
+              shrink-0" %>
+
+<% else %>
+
+  <div class="w-11 h-11 rounded-lg
+              bg-slate-100 border border-slate-200
+              flex items-center justify-center
+              shrink-0">
+
+    <svg xmlns="http://www.w3.org/2000/svg"
+         viewBox="0 0 24 24"
+         fill="none"
+         stroke="currentColor"
+         stroke-width="1.5"
+         class="w-5 h-5 text-slate-400">
+
+      <path stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15.75 6a3.75 3.75 0 11-7.5 0
+               3.75 3.75 0 017.5 0z
+               M4.501 20.118a7.5 7.5 0
+               0114.998 0A17.933 17.933 0
+               0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+    </svg>
+
+  </div>
+
+<% end %>
+
+
+          <div class="min-w-0">
+
+            <div class="flex flex-wrap items-center gap-2">
+
+              <h1 class="text-xl sm:text-2xl font-bold text-slate-900 truncate">
+                <%= @aluno.nome %>
+              </h1>
+
+              <% if @aluno.ativo? %>
+
+                <span class="inline-flex items-center gap-1.5
+                             text-xs font-medium text-emerald-700">
+
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  Ativo
+
+                </span>
+
+              <% else %>
+
+                <span class="inline-flex items-center gap-1.5
+                             text-xs font-medium text-red-600">
+
+                  <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+                  Inativo
+
+                </span>
+
+              <% end %>
+
+            </div>
+
+            <p class="text-sm text-slate-500 mt-1 truncate">
+              <%= @aluno.turma.nome %>
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- AÇÕES -->
+        <div class="flex items-center gap-2 shrink-0">
+
+          <%= link_to turma_path(@aluno.turma),
+              class: "inline-flex items-center justify-center
+                      px-3 py-2 rounded-lg
+                      border border-slate-300
+                      text-xs font-medium text-slate-600
+                      hover:bg-slate-50 transition" do %>
+
+            Voltar
+
+          <% end %>
+
+
+          <%= link_to edit_aluno_path(@aluno),
+              class: "inline-flex items-center justify-center gap-1.5
+                      px-3 py-2 rounded-lg
+                      bg-blue-600 hover:bg-blue-700
+                      text-xs font-semibold text-white transition" do %>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="2"
+                 class="w-3 h-3">
+
+              <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688
+                       a1.875 1.875 0 112.652 2.652
+                       L10.582 16.07
+                       a4.5 4.5 0 01-1.897 1.13
+                       L6 18l.8-2.685
+                       a4.5 4.5 0 011.13-1.897
+                       l8.932-8.931z" />
+
+            </svg>
+
+            Editar
+
+          <% end %>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- INFORMAÇÕES -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+
+    <!-- DADOS ACADÊMICOS -->
+    <div class="bg-white border border-slate-200 rounded-xl shadow-sm">
+
+      <div class="px-5 py-4 border-b border-slate-100">
+
+        <h2 class="text-sm font-semibold text-slate-900">
+          Dados acadêmicos
+        </h2>
+
+      </div>
+
+
+      <div class="divide-y divide-slate-100">
+
+        <!-- TURMA -->
+        <div class="flex items-center justify-between gap-4 px-5 py-3">
+
+          <span class="text-sm text-slate-500">
+            Turma
+          </span>
+
+          <%= link_to @aluno.turma.nome,
+              turma_path(@aluno.turma),
+              class: "text-sm font-medium text-blue-600
+                      hover:text-blue-700 text-right" %>
+
+        </div>
+
+
+        <!-- SÉRIE -->
+        <div class="flex items-center justify-between gap-4 px-5 py-3">
+
+          <span class="text-sm text-slate-500">
+            Série
+          </span>
+
+          <span class="text-sm font-medium text-slate-800 text-right">
+            <%= @aluno.turma.serie.presence || "Não informada" %>
+          </span>
+
+        </div>
+
+
+        <!-- CURSO -->
+        <div class="flex items-center justify-between gap-4 px-5 py-3">
+
+          <span class="text-sm text-slate-500">
+            Curso
+          </span>
+
+          <span class="text-sm font-medium text-slate-800 text-right">
+            <%= @aluno.turma.curso.presence || "Não informado" %>
+          </span>
+
+        </div>
+
+
+        <!-- STATUS -->
+        <div class="flex items-center justify-between gap-4 px-5 py-3">
+
+          <span class="text-sm text-slate-500">
+            Situação
+          </span>
+
+          <% if @aluno.ativo? %>
+
+            <span class="inline-flex items-center gap-1.5
+                         text-sm font-medium text-emerald-700">
+
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Ativo
+
+            </span>
+
+          <% else %>
+
+            <span class="inline-flex items-center gap-1.5
+                         text-sm font-medium text-red-600">
+
+              <span class="w-1.5 h-1.5 rounded-full bg-red-500"></span>
+              Inativo
+
+            </span>
+
+          <% end %>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- NFC -->
+    <div class="bg-white border border-slate-200 rounded-xl shadow-sm">
+
+      <div class="px-5 py-4 border-b border-slate-100">
+
+        <h2 class="text-sm font-semibold text-slate-900">
+          Identificação NFC
+        </h2>
+
+      </div>
+
+
+      <div class="p-5">
+
+        <% if @aluno.nfc_uid.present? %>
+
+          <div class="flex items-center gap-3">
+
+            <div class="w-9 h-9 rounded-lg
+                        bg-emerald-50 text-emerald-600
+                        flex items-center justify-center
+                        text-[10px] font-bold shrink-0">
+              NFC
+            </div>
+
+            <div class="min-w-0">
+
+              <div class="flex items-center gap-1.5">
+
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+
+                <p class="text-sm font-medium text-slate-800">
+                  Pulseira vinculada
+                </p>
+
+              </div>
+
+              <p class="text-xs font-mono text-slate-500 mt-1 break-all">
+                <%= @aluno.nfc_uid %>
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="mt-4 pt-4 border-t border-slate-100">
+
+            <%= link_to "Alterar identificação",
+                edit_aluno_path(@aluno),
+                class: "text-xs font-medium text-blue-600
+                        hover:text-blue-700" %>
+
+          </div>
+
+        <% else %>
+
+          <div class="flex items-center gap-3">
+
+            <div class="w-9 h-9 rounded-lg
+                        bg-amber-50 text-amber-600
+                        flex items-center justify-center
+                        text-[10px] font-bold shrink-0">
+              NFC
+            </div>
+
+            <div>
+
+              <p class="text-sm font-medium text-slate-800">
+                Nenhuma pulseira vinculada
+              </p>
+
+              <p class="text-xs text-slate-500 mt-1">
+                O aluno ainda não possui um UID NFC.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="mt-4 pt-4 border-t border-slate-100">
+
+            <%= link_to "Vincular pulseira",
+                edit_aluno_path(@aluno),
+                class: "text-xs font-medium text-blue-600
+                        hover:text-blue-700" %>
+
+          </div>
+
+        <% end %>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- HISTÓRICO -->
+  <div class="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+
+    <div class="flex items-center justify-between px-5 py-4
+                border-b border-slate-200">
+
+      <div>
+        <h2 class="text-sm font-semibold text-slate-900">
+          Histórico de presença
+        </h2>
+
+        <p class="text-xs text-slate-500 mt-0.5">
+          Registros de aulas e atividades
+        </p>
+      </div>
+
+      <span class="text-xs text-slate-400">
+        <%= @aluno.presencas.count %>
+        <%= @aluno.presencas.count == 1 ? "registro" : "registros" %>
+      </span>
+
+    </div>
+
+
+    <% if @aluno.presencas.any? %>
+
+      <div class="overflow-x-auto">
+
+        <table class="w-full text-sm">
+
+          <thead class="bg-slate-50">
+
+            <tr class="border-b border-slate-200">
+
+              <th class="px-5 py-2.5 text-left
+                         text-xs font-semibold text-slate-500">
+                Atividade
+              </th>
+
+              <th class="px-4 py-2.5 text-left
+                         text-xs font-semibold text-slate-500">
+                Data
+              </th>
+
+              <th class="px-5 py-2.5 text-left
+                         text-xs font-semibold text-slate-500">
+                Origem
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody class="divide-y divide-slate-100">
+
+            <% @aluno.presencas.includes(:atividade)
+                       .order(registrada_em: :desc).each do |presenca| %>
+
+              <tr class="hover:bg-slate-50">
+
+                <td class="px-5 py-3 font-medium text-slate-800">
+                  <%= presenca.atividade.nome %>
+                </td>
+
+                <td class="px-4 py-3 text-slate-500 whitespace-nowrap">
+                  <%= presenca.registrada_em.strftime("%d/%m/%Y %H:%M") %>
+                </td>
+
+                <td class="px-5 py-3">
+
+                  <span class="text-xs text-slate-600">
+                    <%= presenca.origem.to_s.upcase %>
+                  </span>
+
+                </td>
+
+              </tr>
+
+            <% end %>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    <% else %>
+
+      <div class="px-5 py-8 text-center">
+
+        <p class="text-sm font-medium text-slate-700">
+          Nenhuma presença registrada
+        </p>
+
+        <p class="text-xs text-slate-400 mt-1">
+          Os registros aparecerão aqui após as atividades.
+        </p>
+
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>

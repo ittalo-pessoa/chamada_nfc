@@ -1,0 +1,632 @@
+<div class="max-w-7xl mx-auto">
+
+  <!-- BREADCRUMB -->
+  <div class="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-6">
+    <%= link_to "Turmas",
+        turmas_path,
+        class: "hover:text-blue-600 transition" %>
+
+    <span class="text-slate-300">/</span>
+
+    <span class="font-medium text-slate-800">
+      <%= @turma.nome %>
+    </span>
+  </div>
+
+
+  <!-- CABEÇALHO -->
+  <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-8">
+
+    <div class="flex items-start gap-4">
+
+      <div class="w-14 h-14 rounded-2xl bg-blue-600 text-white
+                  flex items-center justify-center shrink-0 shadow-sm">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             fill="none"
+             viewBox="0 0 24 24"
+             stroke-width="1.8"
+             stroke="currentColor"
+             class="w-7 h-7">
+          <path stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M18 18.72a9.094 9.094 0 003.741-.479
+                   3 3 0 00-4.682-2.72
+                   m.94 3.198.001.031c0 .225-.012.447-.037.666
+                   A11.944 11.944 0 0112 21c-2.17 0-4.205-.576-5.963-1.584
+                   A6.062 6.062 0 016 18.719
+                   m12 0a5.971 5.971 0 00-.941-3.197
+                   m0 0A5.995 5.995 0 0012 12.75
+                   a5.995 5.995 0 00-5.058 2.772
+                   m0 0a3 3 0 00-4.681 2.72
+                   8.986 8.986 0 003.74.477
+                   m.94-3.197a5.971 5.971 0 00-.94 3.197
+                   M15 6.75a3 3 0 11-6 0
+                   3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0
+                   2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0
+                   2.25 2.25 0 014.5 0z" />
+        </svg>
+
+      </div>
+
+      <div>
+        <div class="flex flex-wrap items-center gap-3">
+
+          <h1 class="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+            <%= @turma.nome %>
+          </h1>
+
+          <% if @turma.ativa? %>
+            <span class="inline-flex items-center gap-2
+                         bg-emerald-50 text-emerald-700
+                         border border-emerald-100
+                         px-3 py-1 rounded-full
+                         text-xs font-semibold">
+
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Ativa
+            </span>
+          <% else %>
+            <span class="inline-flex items-center gap-2
+                         bg-slate-100 text-slate-600
+                         px-3 py-1 rounded-full
+                         text-xs font-semibold">
+
+              <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+              Inativa
+            </span>
+          <% end %>
+
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 mt-2 text-slate-500">
+
+          <% if @turma.serie.present? %>
+            <span><%= @turma.serie %></span>
+          <% end %>
+
+          <% if @turma.serie.present? && @turma.curso.present? %>
+            <span class="text-slate-300">•</span>
+          <% end %>
+
+          <% if @turma.curso.present? %>
+            <span><%= @turma.curso %></span>
+          <% end %>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- BOTÕES -->
+    <div class="flex flex-col sm:flex-row gap-3">
+
+      <%= link_to edit_turma_path(@turma),
+          class: "inline-flex items-center justify-center gap-2
+                  bg-white border border-slate-300
+                  hover:bg-slate-50 text-slate-700
+                  px-5 py-3 rounded-xl font-semibold transition" do %>
+
+        <span>✎</span>
+        Editar turma
+
+      <% end %>
+
+
+      <%= link_to new_turma_aluno_path(@turma),
+          class: "inline-flex items-center justify-center gap-2
+                  bg-blue-600 hover:bg-blue-700
+                  text-white px-5 py-3
+                  rounded-xl font-semibold shadow-sm transition" do %>
+
+        <span class="text-lg">+</span>
+        Cadastrar aluno
+
+      <% end %>
+
+    </div>
+
+  </div>
+
+
+  <!-- ESTATÍSTICAS -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-7">
+
+    <!-- ALUNOS -->
+    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+
+      <div class="flex items-center justify-between">
+
+        <div>
+          <p class="text-sm font-medium text-slate-500">
+            Alunos
+          </p>
+
+          <p class="text-3xl font-bold text-slate-900 mt-2">
+            <%= @turma.alunos.count %>
+          </p>
+        </div>
+
+        <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600
+                    flex items-center justify-center font-bold">
+          AL
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ATIVOS -->
+    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+
+      <div class="flex items-center justify-between">
+
+        <div>
+          <p class="text-sm font-medium text-slate-500">
+            Alunos ativos
+          </p>
+
+          <p class="text-3xl font-bold text-slate-900 mt-2">
+            <%= @turma.alunos.where(ativo: true).count %>
+          </p>
+        </div>
+
+        <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600
+                    flex items-center justify-center text-xl">
+          ✓
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- NFC -->
+    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+
+      <div class="flex items-center justify-between">
+
+        <div>
+          <p class="text-sm font-medium text-slate-500">
+            NFC vinculados
+          </p>
+
+          <p class="text-3xl font-bold text-slate-900 mt-2">
+            <%= @turma.alunos.where.not(nfc_uid: [nil, ""]).count %>
+          </p>
+        </div>
+
+        <div class="w-12 h-12 rounded-xl bg-violet-50 text-violet-600
+                    flex items-center justify-center text-xs font-bold">
+          NFC
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ATIVIDADES -->
+    <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+
+      <div class="flex items-center justify-between">
+
+        <div>
+          <p class="text-sm font-medium text-slate-500">
+            Atividades
+          </p>
+
+          <p class="text-3xl font-bold text-slate-900 mt-2">
+            <%= @turma.atividades.count %>
+          </p>
+        </div>
+
+        <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600
+                    flex items-center justify-center text-xl">
+          ▣
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- CARD ALUNOS -->
+  <div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+
+    <!-- CABEÇALHO DA TABELA -->
+    <div class="px-6 py-5 border-b border-slate-200
+                flex flex-col md:flex-row md:items-center
+                md:justify-between gap-4">
+
+      <div>
+        <h2 class="text-xl font-bold text-slate-900">
+          Alunos da turma
+        </h2>
+
+        <p class="text-sm text-slate-500 mt-1">
+          Gerencie os alunos e acompanhe a vinculação das pulseiras NFC.
+        </p>
+      </div>
+
+
+      <%= link_to new_turma_aluno_path(@turma),
+          class: "inline-flex items-center justify-center gap-2
+                  bg-blue-50 hover:bg-blue-100
+                  text-blue-700 px-4 py-2.5
+                  rounded-xl text-sm font-semibold transition" do %>
+
+        <span>+</span>
+        Adicionar aluno
+
+      <% end %>
+
+    </div>
+
+
+    <% if @alunos.any? %>
+
+      <!-- TABELA -->
+      <div class="overflow-x-auto">
+
+        <table class="w-full">
+
+          <thead>
+            <tr class="bg-slate-50 border-b border-slate-200">
+
+              <th class="px-6 py-4 text-left
+                         text-xs font-semibold uppercase
+                         tracking-wider text-slate-500">
+                Aluno
+              </th>
+
+              <th class="px-6 py-4 text-left
+                         text-xs font-semibold uppercase
+                         tracking-wider text-slate-500">
+                Pulseira NFC
+              </th>
+
+              <th class="px-6 py-4 text-left
+                         text-xs font-semibold uppercase
+                         tracking-wider text-slate-500">
+                Situação
+              </th>
+
+              <th class="px-6 py-4 text-right
+                         text-xs font-semibold uppercase
+                         tracking-wider text-slate-500">
+                Ações
+              </th>
+
+            </tr>
+          </thead>
+
+
+          <tbody class="divide-y divide-slate-100">
+
+            <% @alunos.each do |aluno| %>
+
+              <tr class="group hover:bg-slate-50/80 transition">
+
+                <!-- ALUNO -->
+                <td class="px-6 py-4">
+
+                  <div class="flex items-center gap-4">
+
+                    <!-- FOTO -->
+                    <% if aluno.foto.attached? %>
+
+                      <%= image_tag aluno.foto,
+                          class: "w-12 h-12 rounded-xl
+                                  object-cover border border-slate-200
+                                  shadow-sm shrink-0" %>
+
+                    <% else %>
+
+                      <div class="w-12 h-12 rounded-xl
+                                  bg-gradient-to-br from-blue-100 to-blue-50
+                                  border border-blue-100
+                                  text-blue-700 font-bold
+                                  flex items-center justify-center shrink-0">
+
+                        <%= aluno.nome.first.upcase %>
+
+                      </div>
+
+                    <% end %>
+
+
+                    <div class="min-w-0">
+
+                      <%= link_to aluno_path(aluno),
+                          class: "font-semibold text-slate-900
+                                  hover:text-blue-600 transition" do %>
+
+                        <%= aluno.nome %>
+
+                      <% end %>
+
+                      <p class="text-xs text-slate-400 mt-1">
+                        <%= @turma.serie.presence || "Aluno" %>
+
+                        <% if @turma.curso.present? %>
+                          • <%= @turma.curso %>
+                        <% end %>
+                      </p>
+
+                    </div>
+
+                  </div>
+
+                </td>
+
+
+                <!-- NFC -->
+                <td class="px-6 py-4">
+
+                  <% if aluno.nfc_uid.present? %>
+
+                    <div class="flex items-center gap-3">
+
+                      <div class="w-9 h-9 rounded-lg
+                                  bg-emerald-50 text-emerald-600
+                                  flex items-center justify-center
+                                  text-[10px] font-bold">
+                        NFC
+                      </div>
+
+                      <div>
+
+                        <div class="flex items-center gap-2">
+
+                          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+
+                          <span class="text-sm font-semibold text-emerald-700">
+                            Vinculada
+                          </span>
+
+                        </div>
+
+                        <p class="text-xs font-mono text-slate-400 mt-1">
+                          <%= aluno.nfc_uid %>
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                  <% else %>
+
+                    <div class="flex items-center gap-3">
+
+                      <div class="w-9 h-9 rounded-lg
+                                  bg-amber-50 text-amber-600
+                                  flex items-center justify-center
+                                  text-[10px] font-bold">
+                        NFC
+                      </div>
+
+                      <div>
+
+                        <div class="flex items-center gap-2">
+
+                          <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+
+                          <span class="text-sm font-semibold text-amber-700">
+                            Não vinculada
+                          </span>
+
+                        </div>
+
+                        <%= link_to "Vincular pulseira",
+                            edit_aluno_path(aluno),
+                            class: "text-xs text-blue-600
+                                    hover:text-blue-700 font-medium mt-1 inline-block" %>
+
+                      </div>
+
+                    </div>
+
+                  <% end %>
+
+                </td>
+
+
+                <!-- STATUS -->
+                <td class="px-6 py-4">
+
+                  <% if aluno.ativo? %>
+
+                    <span class="inline-flex items-center gap-2
+                                 bg-emerald-50 text-emerald-700
+                                 border border-emerald-100
+                                 px-3 py-1.5 rounded-full
+                                 text-xs font-semibold">
+
+                      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                      Ativo
+
+                    </span>
+
+                  <% else %>
+
+                    <span class="inline-flex items-center gap-2
+                                 bg-red-50 text-red-600
+                                 border border-red-100
+                                 px-3 py-1.5 rounded-full
+                                 text-xs font-semibold">
+
+                      <span class="w-2 h-2 rounded-full bg-red-400"></span>
+                      Inativo
+
+                    </span>
+
+                  <% end %>
+
+                </td>
+
+
+                <!-- AÇÕES -->
+                <td class="px-6 py-4">
+
+                  <div class="flex items-center justify-end gap-2">
+
+                    <%= link_to aluno_path(aluno),
+                        title: "Visualizar aluno",
+                        class: "inline-flex items-center justify-center
+                                w-10 h-10 rounded-xl
+                                border border-slate-200
+                                text-slate-500
+                                hover:border-blue-200
+                                hover:bg-blue-50
+                                hover:text-blue-600 transition" do %>
+
+                      <svg xmlns="http://www.w3.org/2000/svg"
+                           fill="none"
+                           viewBox="0 0 24 24"
+                           stroke-width="1.8"
+                           stroke="currentColor"
+                           class="w-5 h-5">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M2.036 12.322a1.012 1.012 0
+                                 010-.639C3.423 7.51 7.36 4.5
+                                 12 4.5c4.638 0 8.573 3.007
+                                 9.963 7.178.07.207.07.431
+                                 0 .639C20.577 16.49 16.64
+                                 19.5 12 19.5c-4.638 0-8.573-3.007
+                                 -9.963-7.178z" />
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M15 12a3 3 0 11-6 0
+                                 3 3 0 016 0z" />
+                      </svg>
+
+                    <% end %>
+
+
+                    <%= link_to edit_aluno_path(aluno),
+                        title: "Editar aluno",
+                        class: "inline-flex items-center justify-center
+                                w-10 h-10 rounded-xl
+                                border border-slate-200
+                                text-slate-500
+                                hover:border-blue-200
+                                hover:bg-blue-50
+                                hover:text-blue-600 transition" do %>
+
+                      <svg xmlns="http://www.w3.org/2000/svg"
+                           fill="none"
+                           viewBox="0 0 24 24"
+                           stroke-width="1.8"
+                           stroke="currentColor"
+                           class="w-5 h-5">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M16.862 4.487l1.687-1.688
+                                 a1.875 1.875 0 112.652 2.652
+                                 L10.582 16.07a4.5 4.5 0
+                                 01-1.897 1.13L6 18l.8-2.685
+                                 a4.5 4.5 0 011.13-1.897
+                                 l8.932-8.931z" />
+                      </svg>
+
+                    <% end %>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            <% end %>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- RODAPÉ DA TABELA -->
+      <div class="px-6 py-4 border-t border-slate-100
+                  bg-slate-50/50 flex flex-col sm:flex-row
+                  sm:items-center sm:justify-between gap-2">
+
+        <p class="text-sm text-slate-500">
+          <span class="font-semibold text-slate-700">
+            <%= @alunos.count %>
+          </span>
+
+          <%= @alunos.count == 1 ? "aluno cadastrado" : "alunos cadastrados" %>
+        </p>
+
+        <p class="text-xs text-slate-400">
+          Turma <%= @turma.nome %>
+        </p>
+
+      </div>
+
+
+    <% else %>
+
+      <!-- ESTADO VAZIO -->
+      <div class="py-16 px-6 text-center">
+
+        <div class="w-20 h-20 rounded-2xl
+                    bg-blue-50 text-blue-600
+                    flex items-center justify-center
+                    mx-auto mb-5">
+
+          <svg xmlns="http://www.w3.org/2000/svg"
+               fill="none"
+               viewBox="0 0 24 24"
+               stroke-width="1.5"
+               stroke="currentColor"
+               class="w-10 h-10">
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M18 18.72a9.094 9.094 0 003.741-.479
+                     3 3 0 00-4.682-2.72
+                     m.94 3.198.001.031c0 .225-.012.447-.037.666
+                     A11.944 11.944 0 0112 21c-2.17 0-4.205-.576-5.963-1.584
+                     A6.062 6.062 0 016 18.719
+                     m12 0a5.971 5.971 0 00-.941-3.197
+                     M15 6.75a3 3 0 11-6 0
+                     3 3 0 016 0z" />
+          </svg>
+
+        </div>
+
+        <h3 class="text-xl font-bold text-slate-900">
+          Nenhum aluno nesta turma
+        </h3>
+
+        <p class="text-slate-500 mt-2 max-w-md mx-auto">
+          Cadastre os alunos da turma para começar a utilizar
+          o controle de presença por NFC.
+        </p>
+
+        <%= link_to new_turma_aluno_path(@turma),
+            class: "inline-flex items-center gap-2
+                    bg-blue-600 hover:bg-blue-700
+                    text-white font-semibold
+                    px-6 py-3 rounded-xl mt-6 transition" do %>
+
+          <span>+</span>
+          Cadastrar primeiro aluno
+
+        <% end %>
+
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>

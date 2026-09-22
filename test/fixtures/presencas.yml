@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  aluno: one
+  atividade: one
+  registrada_em: 2026-09-21 19:41:01
+  origem: MyString
+
+two:
+  aluno: two
+  atividade: two
+  registrada_em: 2026-09-21 19:41:01
+  origem: MyString

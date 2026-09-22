@@ -1,0 +1,415 @@
+<div class="w-full max-w-5xl mx-auto">
+
+  <!-- VOLTAR -->
+  <div class="mb-4">
+    <%= link_to atividades_path,
+        class: "inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-800" do %>
+      <span>←</span>
+      <span>Atividades</span>
+    <% end %>
+  </div>
+
+
+  <!-- CABEÇALHO -->
+  <div class="bg-white border border-slate-200 rounded-xl p-5 mb-4">
+
+    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+
+      <div class="min-w-0">
+
+        <!-- STATUS -->
+        <div class="flex items-center gap-2 mb-2">
+
+          <% if @atividade.status == "ativa" %>
+
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Em andamento
+            </span>
+
+          <% elsif @atividade.status == "encerrada" %>
+
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-slate-100 px-2.5 py-1 text-xs font-semibold text-slate-600">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+              Encerrada
+            </span>
+
+          <% else %>
+
+            <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-50 px-2.5 py-1 text-xs font-semibold text-amber-700">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+              Agendada
+            </span>
+
+          <% end %>
+
+        </div>
+
+
+        <!-- NOME -->
+        <h1 class="text-2xl font-bold text-slate-900">
+          <%= @atividade.nome %>
+        </h1>
+
+
+        <!-- INFORMAÇÕES -->
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-1 mt-2 text-sm text-slate-500">
+
+          <span>
+            <%= @atividade.tipo_atividade %>
+          </span>
+
+          <% if @atividade.inicio.present? %>
+            <span>
+              <%= @atividade.inicio.strftime("%d/%m/%Y") %>
+            </span>
+          <% end %>
+
+          <% if @atividade.local.present? %>
+            <span>
+              <%= @atividade.local %>
+            </span>
+          <% end %>
+
+        </div>
+
+      </div>
+
+
+      <!-- AÇÕES -->
+      <div class="flex flex-wrap items-center gap-2 shrink-0">
+
+        <% if @atividade.status == "agendada" %>
+
+          <% if defined?(@dispositivos) && @dispositivos.present? %>
+
+            <%= form_with url: iniciar_atividade_path(@atividade),
+                          method: :patch,
+                          local: true,
+                          class: "flex flex-wrap items-center gap-2" do |form| %>
+
+              <%= form.select :dispositivo_id,
+                  options_from_collection_for_select(
+                    @dispositivos,
+                    :id,
+                    :nome
+                  ),
+                  {
+                    prompt: "Selecione o leitor"
+                  },
+                  class: "rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white" %>
+
+              <%= form.submit "Iniciar atividade",
+                  class: "cursor-pointer px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-sm font-semibold text-white transition" %>
+
+            <% end %>
+
+          <% else %>
+
+            <%= button_to "Iniciar atividade",
+                iniciar_atividade_path(@atividade),
+                method: :patch,
+                class: "px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-sm font-semibold text-white cursor-pointer transition" %>
+
+          <% end %>
+
+
+        <% elsif @atividade.status == "ativa" %>
+
+          <!-- ESTE É O BOTÃO PARA ENCERRAR -->
+          <%= button_to "Encerrar atividade",
+              encerrar_atividade_path(@atividade),
+              method: :patch,
+              form: {
+                data: {
+                  turbo_confirm: "Deseja realmente encerrar esta chamada?"
+                }
+              },
+              class: "px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-sm font-semibold text-white cursor-pointer transition" %>
+
+        <% end %>
+
+
+        <% unless @atividade.status == "encerrada" %>
+          <%= link_to "Editar",
+              edit_atividade_path(@atividade),
+              class: "px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-600 hover:bg-slate-50 transition" %>
+        <% end %>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- RESUMO -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+
+    <!-- TURMA -->
+    <div class="bg-white border border-slate-200 rounded-xl p-4">
+      <p class="text-xs text-slate-400">
+        Turma
+      </p>
+
+      <p class="text-sm font-semibold text-slate-800 mt-1 truncate">
+        <%= @turma&.nome || "—" %>
+      </p>
+    </div>
+
+
+    <!-- ALUNOS -->
+    <div class="bg-white border border-slate-200 rounded-xl p-4">
+      <p class="text-xs text-slate-400">
+        Alunos
+      </p>
+
+      <p class="text-xl font-bold text-slate-900 mt-1">
+        <%= @alunos.count %>
+      </p>
+    </div>
+
+
+    <!-- PRESENTES -->
+    <div class="bg-white border border-slate-200 rounded-xl p-4">
+      <p class="text-xs text-slate-400">
+        Presentes
+      </p>
+
+      <p class="text-xl font-bold text-emerald-600 mt-1">
+        <%= @presencas.count %>
+      </p>
+    </div>
+
+
+    <!-- AGUARDANDO / AUSENTES -->
+    <div class="bg-white border border-slate-200 rounded-xl p-4">
+
+      <p class="text-xs text-slate-400">
+        <%= @atividade.status == "encerrada" ? "Ausentes" : "Aguardando" %>
+      </p>
+
+      <p class="text-xl font-bold text-slate-700 mt-1">
+        <%= [@alunos.count - @presencas.count, 0].max %>
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- OBSERVAÇÃO -->
+  <% if @atividade.observacao.present? %>
+
+    <div class="bg-white border border-slate-200 rounded-xl px-5 py-4 mb-4">
+
+      <p class="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1">
+        Observação
+      </p>
+
+      <p class="text-sm text-slate-600">
+        <%= @atividade.observacao %>
+      </p>
+
+    </div>
+
+  <% end %>
+
+
+  <!-- CHAMADA -->
+  <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
+
+    <!-- CABEÇALHO DA CHAMADA -->
+    <div class="px-5 py-4 border-b border-slate-200">
+
+      <div class="flex items-center justify-between gap-4">
+
+        <div>
+
+          <h2 class="text-sm font-semibold text-slate-900">
+            Chamada
+          </h2>
+
+          <p class="text-xs text-slate-400 mt-0.5">
+            Alunos matriculados na turma
+          </p>
+
+        </div>
+
+
+        <% if @atividade.status == "ativa" %>
+
+  <div class="flex items-center gap-3">
+
+    <div class="flex items-center gap-2 text-xs font-medium text-emerald-600">
+      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+      Chamada aberta
+    </div>
+
+    <%= button_to "Encerrar chamada",
+        encerrar_atividade_path(@atividade),
+        method: :patch,
+        form: {
+          data: {
+            turbo_confirm: "Deseja realmente encerrar esta chamada?"
+          }
+        },
+        class: "px-3 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-xs font-semibold text-white cursor-pointer transition" %>
+
+  </div>
+
+        <% elsif @atividade.status == "encerrada" %>
+
+          <div class="flex items-center gap-2 text-xs font-medium text-slate-500">
+
+            <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+
+            Chamada encerrada
+
+          </div>
+
+        <% else %>
+
+          <div class="flex items-center gap-2 text-xs font-medium text-amber-600">
+
+            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+
+            Aguardando início
+
+          </div>
+
+        <% end %>
+
+      </div>
+
+    </div>
+
+
+    <!-- LISTA DE ALUNOS -->
+    <% if @alunos.any? %>
+
+      <div class="divide-y divide-slate-100">
+
+        <% @alunos.each do |aluno| %>
+
+          <% presenca = @presencas.find { |p| p.aluno_id == aluno.id } %>
+
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-5 py-3">
+
+            <!-- ALUNO -->
+            <div class="flex items-center gap-3 min-w-0">
+
+              <div class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center shrink-0">
+
+                <span class="text-xs font-bold text-slate-500">
+                  <%= aluno.nome.to_s.first(2).upcase %>
+                </span>
+
+              </div>
+
+
+              <div class="min-w-0">
+
+                <p class="text-sm font-medium text-slate-800 truncate">
+                  <%= aluno.nome %>
+                </p>
+
+
+                <% if aluno.nfc_uid.present? %>
+
+                  <p class="text-xs text-slate-400">
+                    Pulseira cadastrada
+                  </p>
+
+                <% else %>
+
+                  <p class="text-xs text-amber-600">
+                    Sem pulseira NFC
+                  </p>
+
+                <% end %>
+
+              </div>
+
+            </div>
+
+
+            <!-- PRESENÇA -->
+            <div class="flex items-center gap-3 shrink-0">
+
+              <% if presenca.present? %>
+
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700">
+
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+
+                  Presente
+
+                </span>
+
+
+                <% if @atividade.status == "ativa" %>
+
+                  <%= button_to "Remover",
+                      atividade_presenca_path(@atividade, presenca),
+                      method: :delete,
+                      form: {
+                        data: {
+                          turbo_confirm: "Remover a presença deste aluno?"
+                        }
+                      },
+                      class: "text-xs font-medium text-red-500 hover:text-red-700 bg-transparent border-0 p-0 cursor-pointer" %>
+
+                <% end %>
+
+
+              <% elsif @atividade.status == "ativa" %>
+
+                <%= button_to "Marcar presença",
+                    atividade_presencas_path(@atividade),
+                    method: :post,
+                    params: {
+                      aluno_id: aluno.id
+                    },
+                    class: "px-3 py-1.5 rounded-lg border border-emerald-200 bg-emerald-50 hover:bg-emerald-100 text-xs font-semibold text-emerald-700 cursor-pointer transition" %>
+
+
+              <% elsif @atividade.status == "encerrada" %>
+
+                <span class="inline-flex items-center rounded-full bg-red-50 px-2.5 py-1 text-xs font-medium text-red-600">
+                  Ausente
+                </span>
+
+
+              <% else %>
+
+                <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-500">
+                  Aguardando
+                </span>
+
+              <% end %>
+
+            </div>
+
+          </div>
+
+        <% end %>
+
+      </div>
+
+
+    <% else %>
+
+      <div class="py-10 text-center">
+
+        <p class="text-sm text-slate-500">
+          Nenhum aluno encontrado nesta turma.
+        </p>
+
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>

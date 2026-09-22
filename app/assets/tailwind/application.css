@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+/*
+ * Informa explicitamente ao Tailwind onde estão
+ * as classes utilizadas pelo Rails.
+ */
+@source "../../views/**/*.erb";
+@source "../../helpers/**/*.rb";
+@source "../../javascript/**/*.js";

@@ -1,0 +1,73 @@
+<div class="w-full max-w-3xl mx-auto">
+
+  <!-- Breadcrumb -->
+  <nav class="flex items-center gap-2 text-xs text-slate-500 mb-5">
+
+    <%= link_to "Turmas",
+        turmas_path,
+        class: "hover:text-blue-600 transition" %>
+
+    <span class="text-slate-300">/</span>
+
+    <%= link_to @turma.nome,
+        turma_path(@turma),
+        class: "hover:text-blue-600 transition truncate" %>
+
+    <span class="text-slate-300">/</span>
+
+    <span class="text-slate-700 font-medium">
+      Novo aluno
+    </span>
+
+  </nav>
+
+
+  <!-- Cabeçalho -->
+  <div class="mb-6">
+
+    <div class="flex items-center gap-3">
+
+      <div class="w-10 h-10 rounded-lg
+                  bg-blue-50 text-blue-600
+                  flex items-center justify-center shrink-0">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             class="w-5 h-5">
+
+          <path stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 11-7.5 0
+                   3.75 3.75 0 017.5 0z
+                   M4.501 20.118a7.5 7.5 0
+                   0114.998 0A17.933 17.933 0
+                   0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+
+        </svg>
+
+      </div>
+
+      <div class="min-w-0">
+
+        <h1 class="text-xl sm:text-2xl font-bold text-slate-900">
+          Cadastrar aluno
+        </h1>
+
+        <p class="text-sm text-slate-500 mt-0.5 truncate">
+          <%= @turma.nome %>
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Formulário -->
+  <%= render "form", aluno: @aluno %>
+
+</div>

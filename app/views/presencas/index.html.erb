@@ -1,0 +1,335 @@
+<div class="w-full max-w-6xl mx-auto">
+
+  <!-- CABEÇALHO -->
+  <div class="mb-5">
+    <h1 class="text-2xl font-bold text-slate-900">
+      Presenças
+    </h1>
+
+    <p class="text-sm text-slate-500 mt-1">
+      Consulte os registros de presença das atividades.
+    </p>
+  </div>
+
+
+  <!-- FILTROS -->
+  <div class="bg-white border border-slate-200 rounded-xl p-4 mb-4">
+
+    <%= form_with url: presencas_path,
+                  method: :get,
+                  local: true do |form| %>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+
+        <!-- BUSCA -->
+        <div>
+          <%= form.label :busca, "Aluno",
+              class: "block text-xs font-medium text-slate-500 mb-1" %>
+
+          <%= form.text_field :busca,
+              value: params[:busca],
+              placeholder: "Nome do aluno",
+              class: "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100" %>
+        </div>
+
+
+        <!-- TURMA -->
+        <div>
+          <%= form.label :turma_id, "Turma",
+              class: "block text-xs font-medium text-slate-500 mb-1" %>
+
+          <%= form.select :turma_id,
+              options_from_collection_for_select(
+                @turmas,
+                :id,
+                :nome,
+                params[:turma_id]
+              ),
+              {
+                prompt: "Todas"
+              },
+              class: "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white" %>
+        </div>
+
+
+        <!-- ATIVIDADE -->
+        <div>
+          <%= form.label :atividade_id, "Atividade",
+              class: "block text-xs font-medium text-slate-500 mb-1" %>
+
+          <%= form.select :atividade_id,
+              options_from_collection_for_select(
+                @atividades,
+                :id,
+                :nome,
+                params[:atividade_id]
+              ),
+              {
+                prompt: "Todas"
+              },
+              class: "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white" %>
+        </div>
+
+
+        <!-- DATA -->
+        <div>
+          <%= form.label :data, "Data",
+              class: "block text-xs font-medium text-slate-500 mb-1" %>
+
+          <%= form.date_field :data,
+              value: params[:data],
+              class: "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm" %>
+        </div>
+
+
+        <!-- ORIGEM -->
+        <div>
+          <%= form.label :origem, "Origem",
+              class: "block text-xs font-medium text-slate-500 mb-1" %>
+
+          <%= form.select :origem,
+              options_for_select(
+                [
+                  ["Todas", ""],
+                  ["NFC", "nfc"],
+                  ["Manual", "manual"]
+                ],
+                params[:origem]
+              ),
+              {},
+              class: "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white" %>
+        </div>
+
+      </div>
+
+
+      <div class="flex items-center justify-end gap-3 mt-4">
+
+        <% if params[:busca].present? ||
+              params[:turma_id].present? ||
+              params[:atividade_id].present? ||
+              params[:data].present? ||
+              params[:origem].present? %>
+
+          <%= link_to "Limpar filtros",
+              presencas_path,
+              class: "text-sm text-slate-500 hover:text-slate-800" %>
+
+        <% end %>
+
+        <%= form.submit "Filtrar",
+            class: "cursor-pointer px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-900 text-sm font-medium text-white" %>
+
+      </div>
+
+    <% end %>
+
+  </div>
+
+
+  <!-- TABELA -->
+  <div class="bg-white border border-slate-200 rounded-xl overflow-hidden">
+
+    <% if @presencas.any? %>
+
+      <div class="overflow-x-auto">
+
+        <table class="w-full text-sm">
+
+          <thead class="bg-slate-50 border-b border-slate-200">
+
+            <tr>
+
+              <th class="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
+                Aluno
+              </th>
+
+              <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
+                Turma
+              </th>
+
+              <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
+                Atividade
+              </th>
+
+              <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
+                Data
+              </th>
+
+              <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
+                Horário
+              </th>
+
+              <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">
+                Origem
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody class="divide-y divide-slate-100">
+
+            <% @presencas.each do |presenca| %>
+
+              <tr class="hover:bg-slate-50 transition">
+
+                <!-- ALUNO -->
+                <td class="px-5 py-3">
+
+                  <div class="flex items-center gap-3">
+
+                    <div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center shrink-0">
+
+                      <span class="text-xs font-bold text-slate-500">
+                        <%= presenca.aluno.nome.to_s.first(2).upcase %>
+                      </span>
+
+                    </div>
+
+                    <span class="font-medium text-slate-800">
+                      <%= presenca.aluno.nome %>
+                    </span>
+
+                  </div>
+
+                </td>
+
+
+                <!-- TURMA -->
+                <td class="px-4 py-3 text-slate-600">
+                  <%= presenca.aluno.turma&.nome || "—" %>
+                </td>
+
+
+                <!-- ATIVIDADE -->
+                <td class="px-4 py-3">
+
+                  <%= link_to presenca.atividade.nome,
+                      atividade_path(presenca.atividade),
+                      class: "font-medium text-slate-700 hover:text-blue-600" %>
+
+                </td>
+
+
+                <!-- DATA -->
+                <td class="px-4 py-3 text-slate-600 whitespace-nowrap">
+
+                  <% if presenca.registrada_em.present? %>
+
+                    <%= presenca.registrada_em.strftime("%d/%m/%Y") %>
+
+                  <% else %>
+
+                    —
+
+                  <% end %>
+
+                </td>
+
+
+                <!-- HORÁRIO -->
+                <td class="px-4 py-3 text-slate-600 whitespace-nowrap">
+
+                  <% if presenca.registrada_em.present? %>
+
+                    <%= presenca.registrada_em.strftime("%H:%M") %>
+
+                  <% else %>
+
+                    —
+
+                  <% end %>
+
+                </td>
+
+
+                <!-- ORIGEM -->
+                <td class="px-4 py-3">
+
+                  <% if presenca.origem == "nfc" %>
+
+                    <span class="inline-flex items-center rounded-full bg-blue-50 px-2.5 py-1 text-xs font-semibold text-blue-700">
+                      NFC
+                    </span>
+
+                  <% else %>
+
+                    <span class="inline-flex items-center rounded-full bg-slate-100 px-2.5 py-1 text-xs font-medium text-slate-600">
+                      Manual
+                    </span>
+
+                  <% end %>
+
+                </td>
+
+              </tr>
+
+            <% end %>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <!-- PAGINAÇÃO -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 px-5 py-4 border-t border-slate-200">
+
+        <p class="text-xs text-slate-500">
+          <%= @presencas.total_count %>
+          <%= @presencas.total_count == 1 ? "presença encontrada" : "presenças encontradas" %>
+        </p>
+
+
+        <% if @presencas.total_pages > 1 %>
+
+          <%= paginate @presencas,
+              params: {
+                busca: params[:busca],
+                turma_id: params[:turma_id],
+                atividade_id: params[:atividade_id],
+                data: params[:data],
+                origem: params[:origem]
+              } %>
+
+        <% end %>
+
+      </div>
+
+    <% else %>
+
+      <div class="py-14 text-center">
+
+        <div class="w-10 h-10 mx-auto rounded-full bg-slate-100 flex items-center justify-center mb-3">
+
+          <svg xmlns="http://www.w3.org/2000/svg"
+               viewBox="0 0 24 24"
+               fill="none"
+               stroke="currentColor"
+               stroke-width="1.8"
+               style="width: 18px; height: 18px;">
+            <path stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12.75l2.25 2.25L15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+
+        </div>
+
+        <p class="text-sm font-semibold text-slate-700">
+          Nenhuma presença encontrada
+        </p>
+
+        <p class="text-xs text-slate-400 mt-1">
+          As presenças registradas nas atividades aparecerão aqui.
+        </p>
+
+      </div>
+
+    <% end %>
+
+  </div>
+
+</div>

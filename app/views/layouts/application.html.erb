@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR" data-theme="light">
+
+<head>
+  <title>SmartChamada</title>
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+
+  <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+
+  <%= javascript_importmap_tags %>
+</head>
+
+
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+
+  <div class="min-h-screen lg:flex">
+
+    <!-- MENU MOBILE -->
+    <input id="sidebar-toggle"
+           type="checkbox"
+           class="peer hidden">
+
+    <label for="sidebar-toggle"
+           class="fixed inset-0 bg-slate-950/40 z-40 hidden peer-checked:block lg:hidden">
+    </label>
+
+
+    <!-- ====================================================== -->
+    <!-- SIDEBAR -->
+    <!-- ====================================================== -->
+
+    <aside class="
+      fixed lg:sticky
+      top-0 left-0 z-50
+      h-screen w-72
+      bg-slate-950
+      text-slate-300
+      flex flex-col
+      -translate-x-full peer-checked:translate-x-0
+      lg:translate-x-0
+      transition-transform duration-300
+      shrink-0
+    ">
+
+      <!-- LOGO -->
+      <div class="h-24 px-6 flex items-center border-b border-slate-800">
+
+        <div class="flex items-center gap-3">
+
+          <div class="w-11 h-11 rounded-xl bg-blue-600 flex items-center justify-center text-white text-2xl">
+            🎓
+          </div>
+
+          <div>
+
+            <h1 class="text-white font-bold text-xl leading-tight">
+              SmartChamada
+            </h1>
+
+            <p class="text-xs text-slate-400 uppercase tracking-wider">
+              Sistema Acadêmico
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ====================================================== -->
+      <!-- MENU -->
+      <!-- ====================================================== -->
+
+      <nav class="flex-1 px-4 py-6 overflow-y-auto">
+
+        <p class="px-3 mb-3 text-xs uppercase tracking-widest text-slate-500">
+          Gestão
+        </p>
+
+
+        <div class="space-y-1">
+
+
+          <!-- DASHBOARD -->
+
+          <%= link_to root_path,
+              class: "flex items-center gap-3 px-4 py-3 rounded-xl transition
+              #{controller_name == 'dashboard' ?
+                'bg-blue-600 text-white shadow-lg shadow-blue-950/30' :
+                'text-slate-300 hover:bg-slate-800 hover:text-white'}" do %>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 style="width: 20px; height: 20px; flex: none;">
+
+              <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.75 3.75h6.5v6.5h-6.5v-6.5zm10 0h6.5v6.5h-6.5v-6.5zm-10 10h6.5v6.5h-6.5v-6.5zm10 0h6.5v6.5h-6.5v-6.5z" />
+
+            </svg>
+
+            <span class="font-medium">
+              Dashboard
+            </span>
+
+          <% end %>
+
+
+
+          <!-- TURMAS -->
+
+          <%= link_to turmas_path,
+              class: "flex items-center gap-3 px-4 py-3 rounded-xl transition
+              #{controller_name == 'turmas' ?
+                'bg-blue-600 text-white shadow-lg shadow-blue-950/30' :
+                'text-slate-300 hover:bg-slate-800 hover:text-white'}" do %>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 style="width: 20px; height: 20px; flex: none;">
+
+              <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72M18 18.72v-.94c0-.942-.152-1.848-.433-2.696M18 18.72a9.094 9.094 0 01-6 0m5.567-3.636a5.97 5.97 0 00-11.134 0m11.134 0a9.043 9.043 0 00-5.567-1.86 9.043 9.043 0 00-5.567 1.86M6 18.72a9.094 9.094 0 01-3.741-.479 3 3 0 014.682-2.72M6 18.72v-.94c0-.942.152-1.848.433-2.696M15 7.5a3 3 0 11-6 0 3 3 0 016 0z" />
+
+            </svg>
+
+            <span class="font-medium">
+              Turmas
+            </span>
+
+          <% end %>
+
+
+
+          <!-- ALUNOS -->
+
+          <%= link_to alunos_path,
+              class: "flex items-center gap-3 px-4 py-3 rounded-xl transition
+              #{controller_name == 'alunos' ?
+                'bg-blue-600 text-white shadow-lg shadow-blue-950/30' :
+                'text-slate-300 hover:bg-slate-800 hover:text-white'}" do %>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 style="width: 20px; height: 20px; flex: none;">
+
+              <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0" />
+
+            </svg>
+
+            <span class="font-medium">
+              Alunos
+            </span>
+
+          <% end %>
+
+
+
+          <!-- ATIVIDADES -->
+
+          <%= link_to atividades_path,
+              class: "flex items-center gap-3 px-4 py-3 rounded-xl transition
+              #{controller_name == 'atividades' ?
+                'bg-blue-600 text-white shadow-lg shadow-blue-950/30' :
+                'text-slate-300 hover:bg-slate-800 hover:text-white'}" do %>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 style="width: 20px; height: 20px; flex: none;">
+
+              <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6.75 3v2.25M17.25 3v2.25M3.75 9.75h16.5M5.25 5.25h13.5A1.5 1.5 0 0120.25 6.75v12A1.5 1.5 0 0118.75 20.25H5.25a1.5 1.5 0 01-1.5-1.5v-12a1.5 1.5 0 011.5-1.5z" />
+
+            </svg>
+
+            <span class="font-medium">
+              Atividades
+            </span>
+
+          <% end %>
+
+
+
+          <!-- PRESENÇAS -->
+
+          <%= link_to presencas_path,
+              class: "flex items-center gap-3 px-4 py-3 rounded-xl transition
+              #{controller_name == 'presencas' ?
+                'bg-blue-600 text-white shadow-lg shadow-blue-950/30' :
+                'text-slate-300 hover:bg-slate-800 hover:text-white'}" do %>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 style="width: 20px; height: 20px; flex: none;">
+
+              <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 12.75l2.25 2.25L15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+
+            </svg>
+
+            <span class="font-medium">
+              Presenças
+            </span>
+
+          <% end %>
+
+
+
+          <!-- DISPOSITIVOS -->
+
+          <%= link_to dispositivos_path,
+              class: "flex items-center gap-3 px-4 py-3 rounded-xl transition
+              #{controller_name == 'dispositivos' ?
+                'bg-blue-600 text-white shadow-lg shadow-blue-950/30' :
+                'text-slate-300 hover:bg-slate-800 hover:text-white'}" do %>
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 style="width: 20px; height: 20px; flex: none;">
+
+              <rect x="6"
+                    y="3"
+                    width="12"
+                    height="18"
+                    rx="2" />
+
+              <path stroke-linecap="round"
+                    d="M9 6h6M10 18h4" />
+
+            </svg>
+
+            <span class="font-medium">
+              Dispositivos
+            </span>
+
+          <% end %>
+
+
+
+          <!-- RELATÓRIOS - AINDA SERÁ IMPLEMENTADO -->
+
+          <div class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 cursor-not-allowed"
+               title="Em desenvolvimento">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 style="width: 20px; height: 20px; flex: none;">
+
+              <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 3v18h18M7 16v-4M12 16V8M17 16V5" />
+
+            </svg>
+
+            <span class="font-medium">
+              Relatórios
+            </span>
+
+            <span class="ml-auto text-xs text-slate-600">
+              em breve
+            </span>
+
+          </div>
+
+
+        </div>
+
+
+        <!-- DIVISOR -->
+
+        <div class="border-t border-slate-800 my-6"></div>
+
+
+        <!-- CONFIGURAÇÕES -->
+
+        <p class="px-3 mb-3 text-xs uppercase tracking-widest text-slate-500">
+          Configurações
+        </p>
+
+
+        <div class="space-y-1">
+
+
+          <!-- PARÂMETROS - AINDA SERÁ IMPLEMENTADO -->
+
+          <div class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 cursor-not-allowed"
+               title="Em desenvolvimento">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 style="width: 20px; height: 20px; flex: none;">
+
+              <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M12 15.75A3.75 3.75 0 1012 8.25a3.75 3.75 0 000 7.5z" />
+
+              <path stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M19.5 12a7.5 7.5 0 01-.116 1.315l2.018 1.573-2.25 3.897-2.375-.956a7.56 7.56 0 01-2.277 1.316L14.125 21h-4.5L9.25 19.145a7.56 7.56 0 01-2.277-1.316l-2.375.956-2.25-3.897 2.018-1.573A7.5 7.5 0 014.25 12c0-.447.04-.884.116-1.315L2.348 9.112l2.25-3.897 2.375.956A7.56 7.56 0 019.25 4.855L9.625 3h4.5l.375 1.855a7.56 7.56 0 012.277 1.316l2.375-.956 2.25 3.897-2.018 1.573c.076.431.116.868.116 1.315z" />
+
+            </svg>
+
+            <span class="font-medium">
+              Parâmetros
+            </span>
+
+            <span class="ml-auto text-xs text-slate-600">
+              em breve
+            </span>
+
+          </div>
+
+
+        </div>
+
+      </nav>
+
+
+      <!-- ====================================================== -->
+      <!-- STATUS NFC -->
+      <!-- ====================================================== -->
+
+      <div class="p-4">
+
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+
+          <div class="flex items-center gap-3">
+
+            <div class="w-10 h-10 rounded-full border border-blue-400 flex items-center justify-center text-blue-400 text-sm font-bold">
+              )))
+            </div>
+
+            <div>
+
+              <p class="text-sm text-white font-medium">
+                Chamada NFC
+              </p>
+
+              <div class="flex items-center gap-2 mt-1">
+
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+
+                <span class="text-xs text-emerald-400">
+                  Sistema ativo
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <p class="text-xs text-slate-600 mt-5 px-2">
+          SmartChamada v1.0
+        </p>
+
+      </div>
+
+    </aside>
+
+
+    <!-- ====================================================== -->
+    <!-- CONTEÚDO -->
+    <!-- ====================================================== -->
+
+    <div class="flex-1 min-w-0">
+
+
+      <!-- HEADER -->
+
+      <header class="h-20 bg-white border-b border-slate-200 flex items-center px-4 md:px-8 gap-4 sticky top-0 z-30">
+
+        <!-- BOTÃO MOBILE -->
+
+        <label for="sidebar-toggle"
+               class="lg:hidden cursor-pointer text-2xl text-slate-700">
+          ☰
+        </label>
+
+
+        <!-- BUSCA -->
+
+        <div class="hidden md:block flex-1 max-w-xl">
+
+          <div class="relative">
+
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+              ⌕
+            </span>
+
+            <input
+              type="text"
+              placeholder="Buscar alunos, turmas ou atividades..."
+              class="w-full bg-slate-100 border border-slate-200 rounded-xl py-3 pl-11 pr-4 outline-none focus:ring-2 focus:ring-blue-500">
+
+          </div>
+
+        </div>
+
+
+        <!-- USUÁRIO -->
+
+        <div class="ml-auto flex items-center gap-4">
+
+          <button class="relative w-10 h-10 rounded-xl hover:bg-slate-100">
+            🔔
+          </button>
+
+
+          <div class="hidden sm:flex items-center gap-3 border-l border-slate-200 pl-4">
+
+            <div class="w-10 h-10 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center font-bold">
+              IP
+            </div>
+
+            <div>
+
+              <p class="text-sm font-semibold text-slate-800">
+                Professor
+              </p>
+
+              <p class="text-xs text-slate-500">
+                Administrador
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- ====================================================== -->
+      <!-- PÁGINA -->
+      <!-- ====================================================== -->
+
+      <main class="p-4 md:p-6 xl:p-8 max-w-[1600px] mx-auto">
+
+        <% if notice.present? %>
+
+          <div class="mb-6 bg-emerald-50 border border-emerald-200 text-emerald-700 px-5 py-4 rounded-xl">
+            <%= notice %>
+          </div>
+
+        <% end %>
+
+
+        <% if alert.present? %>
+
+          <div class="mb-6 bg-red-50 border border-red-200 text-red-700 px-5 py-4 rounded-xl">
+            <%= alert %>
+          </div>
+
+        <% end %>
+
+
+        <%= yield %>
+
+      </main>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

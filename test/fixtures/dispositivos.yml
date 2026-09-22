@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  identificador: MyString
+  api_token: MyString
+  local: MyString
+  ativo: false
+  ultimo_contato: 2026-09-21 22:35:17
+
+two:
+  nome: MyString
+  identificador: MyString
+  api_token: MyString
+  local: MyString
+  ativo: false
+  ultimo_contato: 2026-09-21 22:35:17

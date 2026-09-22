@@ -1,0 +1,272 @@
+<!-- Breadcrumb -->
+<div class="text-sm text-slate-500 mb-5">
+  Início <span class="mx-2">›</span>
+  <span class="text-slate-800 font-medium">Turmas</span>
+</div>
+
+<!-- TÍTULO -->
+<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-5 mb-8">
+
+  <div>
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-2xl">
+        ♟
+      </div>
+
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold text-slate-900">
+          Turmas
+        </h1>
+
+        <p class="text-slate-500 mt-1">
+          Gerencie as turmas cadastradas no sistema.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <%= link_to new_turma_path,
+      class: "inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl shadow-sm transition" do %>
+    <span class="text-xl">+</span>
+    Nova turma
+  <% end %>
+
+</div>
+
+<!-- ESTATÍSTICAS -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-7">
+
+  <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+    <div class="flex items-center gap-4">
+      <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl">
+        ♟
+      </div>
+
+      <div>
+        <p class="text-3xl font-bold text-slate-900">
+          <%= @turmas.count %>
+        </p>
+        <p class="text-sm text-slate-500">
+          Total de turmas
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+    <div class="flex items-center gap-4">
+      <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl">
+        ♙
+      </div>
+
+      <div>
+        <p class="text-3xl font-bold text-slate-900">
+          <%= Aluno.count %>
+        </p>
+        <p class="text-sm text-slate-500">
+          Total de alunos
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+    <div class="flex items-center gap-4">
+      <div class="w-14 h-14 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-2xl">
+        ▣
+      </div>
+
+      <div>
+        <p class="text-3xl font-bold text-slate-900">
+          <%= Atividade.count %>
+        </p>
+        <p class="text-sm text-slate-500">
+          Atividades
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+    <div class="flex items-center gap-4">
+      <div class="w-14 h-14 bg-violet-100 text-violet-600 rounded-2xl flex items-center justify-center text-2xl">
+        ✓
+      </div>
+
+      <div>
+        <p class="text-3xl font-bold text-slate-900">
+          <%= @turmas.where(ativa: true).count %>
+        </p>
+        <p class="text-sm text-slate-500">
+          Turmas ativas
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BUSCA -->
+<div class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 mb-6">
+
+  <div class="flex flex-col lg:flex-row gap-4">
+
+    <div class="flex-1">
+      <label class="block text-sm font-semibold text-slate-700 mb-2">
+        Buscar
+      </label>
+
+      <input
+        type="text"
+        placeholder="Nome da turma, série ou curso..."
+        class="w-full border border-slate-300 rounded-xl px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100">
+    </div>
+
+    <div class="lg:w-52">
+      <label class="block text-sm font-semibold text-slate-700 mb-2">
+        Situação
+      </label>
+
+      <select class="w-full border border-slate-300 rounded-xl px-4 py-3 bg-white">
+        <option>Todas</option>
+        <option>Ativas</option>
+        <option>Inativas</option>
+      </select>
+    </div>
+
+    <div class="flex items-end">
+      <button class="w-full lg:w-auto bg-blue-600 hover:bg-blue-700 text-white px-7 py-3 rounded-xl font-semibold">
+        Filtrar
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- TABELA -->
+<div class="bg-white border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
+
+  <div class="overflow-x-auto">
+
+    <table class="w-full">
+
+      <thead class="bg-slate-50 border-b border-slate-200">
+        <tr class="text-left text-sm text-slate-500">
+          <th class="px-6 py-4">Turma</th>
+          <th class="px-6 py-4">Série</th>
+          <th class="px-6 py-4">Curso</th>
+          <th class="px-6 py-4">Alunos</th>
+          <th class="px-6 py-4">NFC</th>
+          <th class="px-6 py-4">Situação</th>
+          <th class="px-6 py-4 text-right">Ações</th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-slate-100">
+
+        <% @turmas.each do |turma| %>
+
+          <tr class="hover:bg-slate-50 transition">
+
+            <td class="px-6 py-5">
+              <div class="font-semibold text-slate-900">
+                <%= turma.nome %>
+              </div>
+            </td>
+
+            <td class="px-6 py-5 text-slate-600">
+              <%= turma.serie.presence || "—" %>
+            </td>
+
+            <td class="px-6 py-5">
+              <% if turma.curso.present? %>
+                <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
+                  <%= turma.curso %>
+                </span>
+              <% else %>
+                —
+              <% end %>
+            </td>
+
+            <td class="px-6 py-5">
+              <span class="font-semibold text-slate-800">
+                <%= turma.alunos.count %>
+              </span>
+            </td>
+
+            <td class="px-6 py-5">
+              <div class="flex items-center gap-2">
+                <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+
+                <span class="text-sm text-slate-600">
+                  <%= turma.alunos.where.not(nfc_uid: [nil, ""]).count %>
+                  vinculados
+                </span>
+              </div>
+            </td>
+
+            <td class="px-6 py-5">
+
+              <% if turma.ativa? %>
+
+                <span class="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-semibold">
+                  <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
+                  Ativa
+                </span>
+
+              <% else %>
+
+                <span class="inline-flex items-center bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs font-semibold">
+                  Inativa
+                </span>
+
+              <% end %>
+
+            </td>
+
+            <td class="px-6 py-5 text-right">
+
+              <%= link_to "Abrir",
+                  turma_path(turma),
+                  class: "inline-flex bg-blue-50 hover:bg-blue-100 text-blue-700 font-semibold px-4 py-2 rounded-lg text-sm transition" %>
+
+            </td>
+
+          </tr>
+
+        <% end %>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <% if @turmas.empty? %>
+
+    <div class="py-16 text-center">
+      <div class="text-5xl mb-4">🎓</div>
+
+      <h3 class="font-bold text-slate-800 text-lg">
+        Nenhuma turma cadastrada
+      </h3>
+
+      <p class="text-slate-500 mt-1 mb-5">
+        Comece cadastrando a primeira turma.
+      </p>
+
+      <%= link_to "Cadastrar turma",
+          new_turma_path,
+          class: "inline-block bg-blue-600 text-white px-5 py-3 rounded-xl font-semibold" %>
+    </div>
+
+  <% end %>
+
+</div>
+
+<!-- RODAPÉ -->
+<div class="flex flex-col md:flex-row justify-between gap-3 mt-8 pt-6 border-t border-slate-200 text-sm text-slate-400">
+  <p>🎓 Tecnologia a serviço de uma educação mais presente.</p>
+  <p>SmartChamada</p>
+</div>

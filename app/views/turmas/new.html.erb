@@ -1,0 +1,43 @@
+<div class="max-w-4xl mx-auto">
+
+  <div class="text-sm text-slate-500 mb-5">
+    <%= link_to "Turmas", turmas_path, class: "hover:text-blue-600" %>
+    <span class="mx-2">›</span>
+    Nova turma
+  </div>
+
+  <div class="mb-7">
+    <h1 class="text-3xl font-bold text-slate-900">
+      Nova turma
+    </h1>
+
+    <p class="text-slate-500 mt-2">
+      Cadastre uma nova turma no SmartChamada.
+    </p>
+  </div>
+
+  <div class="bg-white border border-slate-200 rounded-2xl shadow-sm">
+    <div class="p-6 md:p-8">
+
+      <div class="flex items-center gap-4 mb-7 pb-6 border-b border-slate-100">
+        <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl">
+          🎓
+        </div>
+
+        <div>
+          <h2 class="font-bold text-slate-900 text-lg">
+            Informações da turma
+          </h2>
+
+          <p class="text-sm text-slate-500">
+            Informe os dados acadêmicos da turma.
+          </p>
+        </div>
+      </div>
+
+      <%= render "form", turma: @turma %>
+
+    </div>
+  </div>
+
+</div>
