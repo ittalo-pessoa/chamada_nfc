@@ -1,17 +1,13 @@
 class DispositivosController < ApplicationController
-  before_action :set_dispositivo, only: %i[
-    show
-    edit
-    update
-    destroy
-  ]
+before_action :set_dispositivo, only: %i[show edit update destroy]
 
   def index
     @dispositivos = Dispositivo.order(:nome)
   end
 
-  def show
-  end
+ def show
+  @dispositivo = Dispositivo.find(params[:id])
+end
 
   def new
     @dispositivo = Dispositivo.new(ativo: true)
@@ -51,9 +47,11 @@ class DispositivosController < ApplicationController
 
   private
 
-  def set_dispositivo
-    @dispositivo = Dispositivo.find(params[:id])
-  end
+private
+
+def set_dispositivo
+  @dispositivo = Dispositivo.find(params[:id])
+end
 
   def dispositivo_params
     params.require(:dispositivo).permit(

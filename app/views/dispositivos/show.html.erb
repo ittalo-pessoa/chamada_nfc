@@ -1,0 +1,167 @@
+<div class="w-full max-w-5xl mx-auto">
+
+  <!-- VOLTAR -->
+  <div class="mb-4">
+    <%= link_to dispositivos_path,
+        class: "inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-800" do %>
+      <span>←</span>
+      Dispositivos
+    <% end %>
+  </div>
+
+  <!-- CABEÇALHO -->
+  <div class="bg-white border border-slate-200 rounded-xl p-6 mb-4">
+
+    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+
+      <div>
+        <p class="text-sm text-slate-500 mb-1">
+          Dispositivo NFC
+        </p>
+
+        <h1 class="text-2xl font-bold text-slate-900">
+          <%= @dispositivo.nome %>
+        </h1>
+
+        <p class="text-sm text-slate-500 mt-1">
+          Informações e credenciais do dispositivo
+        </p>
+      </div>
+
+      <div class="flex gap-2">
+        <%= link_to "Editar",
+            edit_dispositivo_path(@dispositivo),
+            class: "px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-700" %>
+      </div>
+
+    </div>
+  </div>
+
+
+  <!-- INFORMAÇÕES -->
+  <div class="bg-white border border-slate-200 rounded-xl overflow-hidden mb-4">
+
+    <div class="border-b border-slate-200 px-6 py-4">
+      <h2 class="font-semibold text-slate-900">
+        Informações do dispositivo
+      </h2>
+    </div>
+
+    <div class="divide-y divide-slate-100">
+
+      <!-- NOME -->
+      <div class="px-6 py-4">
+        <p class="text-xs font-medium uppercase tracking-wide text-slate-400">
+          Nome
+        </p>
+
+        <p class="mt-1 text-slate-900 font-medium">
+          <%= @dispositivo.nome %>
+        </p>
+      </div>
+
+
+      <!-- IDENTIFICADOR -->
+      <div class="px-6 py-4">
+        <p class="text-xs font-medium uppercase tracking-wide text-slate-400">
+          Identificador
+        </p>
+
+        <div class="mt-2">
+          <code class="inline-block bg-slate-100 text-slate-800 px-3 py-2 rounded-lg text-sm font-mono">
+            <%= @dispositivo.identificador %>
+          </code>
+        </div>
+      </div>
+
+
+      <!-- TOKEN -->
+      <div class="px-6 py-4">
+
+        <div class="flex items-center justify-between gap-4">
+
+          <div>
+            <p class="text-xs font-medium uppercase tracking-wide text-slate-400">
+              API Token
+            </p>
+
+            <p class="text-xs text-slate-500 mt-1">
+              Utilize este token para autenticar a ESP32 na API.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="mt-3 bg-slate-900 rounded-lg p-4 overflow-x-auto">
+          <code class="text-sm text-white font-mono break-all">
+            <%= @dispositivo.api_token %>
+          </code>
+        </div>
+
+        <div class="mt-2">
+          <p class="text-xs text-amber-600">
+            ⚠ Não compartilhe este token. Ele permite que o dispositivo envie dados para a API.
+          </p>
+        </div>
+
+      </div>
+
+
+      <!-- CRIADO -->
+      <div class="px-6 py-4">
+        <p class="text-xs font-medium uppercase tracking-wide text-slate-400">
+          Cadastrado em
+        </p>
+
+        <p class="mt-1 text-slate-700">
+          <%= @dispositivo.created_at.strftime("%d/%m/%Y às %H:%M") %>
+        </p>
+      </div>
+
+
+      <!-- ATUALIZADO -->
+      <div class="px-6 py-4">
+        <p class="text-xs font-medium uppercase tracking-wide text-slate-400">
+          Última atualização
+        </p>
+
+        <p class="mt-1 text-slate-700">
+          <%= @dispositivo.updated_at.strftime("%d/%m/%Y às %H:%M") %>
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- ÁREA TÉCNICA -->
+  <div class="bg-blue-50 border border-blue-200 rounded-xl p-5 mb-4">
+
+    <h2 class="font-semibold text-blue-900 mb-2">
+      Configuração da ESP32
+    </h2>
+
+    <p class="text-sm text-blue-800">
+      Para que esta ESP32 consiga se comunicar com o sistema,
+      utilize o identificador e o API Token apresentados acima
+      no código do dispositivo.
+    </p>
+
+  </div>
+
+
+  <!-- EXCLUIR -->
+  <div class="flex justify-end">
+
+    <%= button_to "Excluir dispositivo",
+        dispositivo_path(@dispositivo),
+        method: :delete,
+        data: {
+          turbo_confirm: "Tem certeza que deseja excluir este dispositivo?"
+        },
+        class: "text-sm text-red-600 hover:text-red-800 font-medium" %>
+
+  </div>
+
+</div>
