@@ -1,0 +1,28 @@
+<section class="basic-page">
+  <header class="basic-heading">
+    <div><h1>Relatórios</h1><p>Quantidade de presenças registradas por atividade.</p></div>
+    <%= link_to "Consultar presenças", presencas_path, class: "basic-button" %>
+  </header>
+  <div class="basic-panel">
+    <% if @atividades.any? %>
+      <div class="basic-table-wrap">
+        <table class="basic-table">
+          <thead><tr><th scope="col">Atividade</th><th scope="col">Data</th><th scope="col">Presenças</th><th scope="col">Consulta</th></tr></thead>
+          <tbody>
+            <% @atividades.each do |atividade| %>
+              <tr>
+                <td><%= link_to atividade.nome, atividade_path(atividade) %></td>
+                <td><%= atividade.inicio&.strftime("%d/%m/%Y") || "Não definida" %></td>
+                <td><%= atividade.total_presencas %></td>
+                <td><%= link_to "Ver presenças", presencas_path(atividade_id: atividade.id) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+      <div class="basic-pagination"><%= paginate @atividades %></div>
+    <% else %>
+      <p>Nenhuma atividade cadastrada para gerar o relatório.</p>
+    <% end %>
+  </div>
+</section>

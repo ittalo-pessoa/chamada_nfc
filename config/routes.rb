@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   # ============================================================
 
   root "dashboard#index"
+  get "relatorios", to: "relatorios#index"
+  get "parametros", to: "parametros#index"
 
 
   # ============================================================

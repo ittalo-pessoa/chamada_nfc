@@ -1,0 +1,7 @@
+<section class="basic-page">
+  <header class="basic-heading">
+    <h1>Editar dispositivo</h1>
+    <%= link_to "Voltar", dispositivo_path(@dispositivo), class: "basic-button" %>
+  </header>
+  <div class="basic-panel"><%= render "form", dispositivo: @dispositivo %></div>
+</section>

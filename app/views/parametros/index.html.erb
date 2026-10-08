@@ -1,0 +1,12 @@
+<section class="basic-page">
+  <header class="basic-heading"><div><h1>Parâmetros</h1><p>Consulte as opções utilizadas pelo sistema.</p></div></header>
+  <div class="basic-panel">
+    <dl class="basic-settings">
+      <div><dt>Tipos de atividade</dt><dd><%= Atividade::TIPOS.join(", ") %></dd></div>
+      <div><dt>Status das atividades</dt><dd>Agendada, em andamento e encerrada.</dd></div>
+      <div><dt>Registro de presença</dt><dd>Leitor NFC ou registro manual na atividade em andamento.</dd></div>
+      <div><dt>Leitores ativos</dt><dd><%= @dispositivos_ativos %></dd></div>
+    </dl>
+    <%= link_to "Gerenciar dispositivos NFC", dispositivos_path, class: "basic-button" %>
+  </div>
+</section>

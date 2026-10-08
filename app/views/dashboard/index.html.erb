@@ -1,4 +1,32 @@
-<div>
-  <h1 class="font-bold text-4xl">Dashboard#index</h1>
-  <p>Find me in app/views/dashboard/index.html.erb</p>
-</div>
+<section class="basic-page">
+  <header class="basic-heading">
+    <div><h1>Dashboard</h1><p>Visão geral da chamada NFC.</p></div>
+    <%= link_to "Nova atividade", new_atividade_path, class: "basic-button basic-primary" %>
+  </header>
+  <div class="basic-stats">
+    <% [["Turmas", @total_turmas, turmas_path], ["Alunos", @total_alunos, alunos_path], ["Atividades", @total_atividades, atividades_path], ["Presenças hoje", @presencas_hoje, presencas_path(data: Date.current.iso8601)]].each do |label, count, path| %>
+      <%= link_to path, class: "basic-stat" do %><span><%= label %></span><strong><%= count %></strong><% end %>
+    <% end %>
+  </div>
+  <div class="basic-panel">
+    <h2>Acesso rápido</h2>
+    <div class="basic-shortcuts">
+      <%= link_to "Cadastrar turma", new_turma_path, class: "basic-button" %>
+      <%= link_to "Consultar presenças", presencas_path, class: "basic-button" %>
+      <%= link_to "Cadastrar leitor NFC", new_dispositivo_path, class: "basic-button" %>
+      <%= link_to "Ver relatórios", relatorios_path, class: "basic-button" %>
+    </div>
+  </div>
+  <div class="basic-panel">
+    <div class="basic-heading"><h2>Atividades recentes</h2><%= link_to "Ver todas", atividades_path %></div>
+    <% if @atividades_recentes.any? %>
+      <ul class="basic-list">
+        <% @atividades_recentes.each do |atividade| %>
+          <li><%= link_to atividade.nome, atividade_path(atividade) %><span><%= atividade.inicio&.strftime("%d/%m/%Y") || "Não definida" %> · <%= { "agendada" => "Agendada", "ativa" => "Em andamento", "encerrada" => "Encerrada" }.fetch(atividade.status, "Não informado") %></span></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>Nenhuma atividade cadastrada. Crie uma atividade para começar.</p>
+    <% end %>
+  </div>
+</section>
