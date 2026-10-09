@@ -131,15 +131,15 @@
 
   <div class="overflow-x-auto">
 
-    <table class="w-full">
+    <table class="responsive-table w-full">
 
       <thead class="bg-slate-50 border-b border-slate-200">
         <tr class="text-left text-sm text-slate-500">
-          <th class="px-6 py-4">Aluno</th>
-          <th class="px-6 py-4">Turma</th>
-          <th class="px-6 py-4">NFC</th>
-          <th class="px-6 py-4">Situação</th>
-          <th class="px-6 py-4 text-right">Ações</th>
+          <th scope="col" class="px-6 py-4">Aluno</th>
+          <th scope="col" class="px-6 py-4">Turma</th>
+          <th scope="col" class="px-6 py-4">NFC</th>
+          <th scope="col" class="px-6 py-4">Situação</th>
+          <th scope="col" class="px-6 py-4 text-right">Ações</th>
         </tr>
       </thead>
 
@@ -150,7 +150,7 @@
           <tr class="hover:bg-slate-50 transition">
 
             <!-- ALUNO -->
-            <td class="px-6 py-4">
+            <td data-label="Aluno" class="px-6 py-4">
 
               <div class="flex items-center gap-4">
 
@@ -182,14 +182,14 @@
             </td>
 
             <!-- TURMA -->
-            <td class="px-6 py-4">
+            <td data-label="Turma" class="px-6 py-4">
               <span class="text-slate-700">
                 <%= aluno.turma.nome %>
               </span>
             </td>
 
             <!-- NFC -->
-            <td class="px-6 py-4">
+            <td data-label="NFC" class="px-6 py-4">
 
               <% if aluno.nfc_uid.present? %>
 
@@ -216,7 +216,7 @@
             </td>
 
             <!-- SITUAÇÃO -->
-            <td class="px-6 py-4">
+            <td data-label="Situação" class="px-6 py-4">
 
               <% if aluno.ativo? %>
 
@@ -236,7 +236,7 @@
             </td>
 
             <!-- AÇÕES -->
-            <td class="px-6 py-4 text-right">
+            <td data-label="Ações" class="px-6 py-4 text-right">
 
               <%= link_to "Visualizar",
                   aluno_path(aluno),

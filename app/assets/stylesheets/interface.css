@@ -20,6 +20,8 @@ body { margin: 0; font-family: system-ui, sans-serif; }
 .basic-button, .activities .btn, .activities .action { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 10px 16px; border: 1px solid #cbd5e1; border-radius: 8px; background: white; color: #17243b; text-decoration: none; font: inherit; cursor: pointer; }
 .basic-page .basic-primary, .activities .btn-primary { background: #2563eb; color: white; border-color: #2563eb; }
 .basic-button:hover, .activities .btn:hover { filter: brightness(.95); }
+.basic-button.basic-danger { background: #dc2626; border-color: #dc2626; color: white; }
+.basic-button.basic-danger:hover { background: #b91c1c; border-color: #b91c1c; }
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid #60a5fa; outline-offset: 3px; }
 .basic-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-bottom: 24px; }
 .basic-stat, .basic-panel, .activities .filters, .activities .panel { border: 1px solid #e2e8f0; border-radius: 10px; background: white; padding: 20px; margin-bottom: 20px; }
@@ -64,7 +66,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .activities table, .activities tbody { display: block; }
   .activities thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .activities tbody { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-  .activities tr { min-width: 0; padding: 16px; border: 1px solid #e2e8f0; border-radius: 8px; }
+  .activities tr { display: block; min-width: 0; padding: 16px; border: 1px solid #e2e8f0; border-radius: 8px; }
   .activities td { display: block; padding: 8px 0; border: 0; }
   .activities td::before { content: attr(data-label); display: block; font-size: 12px; color: #52627a; }
   .activities td:first-child::before, .activities td:last-child::before { display: none; }
@@ -90,4 +92,65 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 }
 @media (max-width: 400px) {
   .basic-stats { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Shared responsive behavior for every screen, including existing Tailwind views. */
+.app-main { container: page / inline-size; overflow-wrap: anywhere; }
+.app-main :is(.flex, .inline-flex, .grid) > * { min-width: 0; }
+.app-main :is(img, video, canvas) { max-width: 100%; }
+.app-main :is(img, svg)[class*="w-"] { flex-shrink: 0; }
+.app-main :is(input, select, textarea) { max-width: 100%; min-width: 0; }
+.app-main :is(input:not([type=checkbox]):not([type=radio]):not([type=hidden]), select, textarea) { font-size: 16px; }
+.app-main :is(button, input[type=submit], a[class*="rounded"]) { min-height: 44px; }
+.app-main input[type=file] { width: 100%; white-space: normal; }
+.app-main code { white-space: normal; overflow-wrap: anywhere; }
+.app-main .pagination { display: flex; flex-wrap: wrap; gap: 6px; }
+.app-main .pagination :is(a, .current, .gap) { display: inline-flex; justify-content: center; align-items: center; min-width: 40px; min-height: 44px; padding: 8px; }
+.responsive-heading, .responsive-actions { flex-wrap: wrap; gap: 12px; }
+.responsive-actions form { max-width: 100%; }
+.app-menu-toggle { display: none; }
+.responsive-table { width: 100%; }
+.responsive-table :is(th, td) { overflow-wrap: anywhere; }
+@container page (max-width: 960px) {
+  .app-main .grid[class*="lg:grid-cols-5"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .app-main .grid[class*="xl:grid-cols-4"] { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .responsive-table, .responsive-table tbody { display: block; }
+  .responsive-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .responsive-table tbody { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; padding: 16px; }
+  .responsive-table tbody tr { display: flex; flex-direction: column; min-width: 0; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px; background: white; }
+  .responsive-table tbody td { display: block; width: 100%; padding: 8px 0; border: 0; text-align: left; white-space: normal; }
+  .responsive-table td::before { content: attr(data-label); display: block; margin-bottom: 6px; color: #52627a; font-size: 12px; font-weight: 600; }
+  .responsive-table td:last-child { margin-top: auto; }
+  .responsive-table td .justify-end { justify-content: flex-start; flex-wrap: wrap; }
+}
+@container page (max-width: 600px) {
+  .app-main .grid[class*="grid-cols-"]:not(.basic-stats) { grid-template-columns: minmax(0, 1fr); }
+  .responsive-table tbody { grid-template-columns: minmax(0, 1fr); padding: 12px; gap: 12px; }
+  .app-main :is(h1, h2, p, code).truncate { white-space: normal; overflow: visible; text-overflow: clip; }
+  .responsive-heading { flex-direction: column; align-items: stretch; }
+  .responsive-actions { width: 100%; }
+  .responsive-actions > :is(a, form, button, input[type=submit]) { flex: 1 1 140px; }
+  .responsive-actions form button { width: 100%; }
+  .basic-heading { align-items: stretch; flex-direction: column; }
+  .basic-shortcuts { flex-direction: column; }
+  .app-main form .flex[class*="justify-end"] { flex-wrap: wrap; }
+  .app-main nav.flex { flex-wrap: wrap; }
+}
+@media (min-width: 1024px) {
+  .app-sidebar { position: sticky; top: 0; height: 100dvh; overflow-y: auto; }
+}
+@media (max-width: 1023px) {
+  .app-shell { display: block; }
+  .app-sidebar { position: relative; padding: 16px; }
+  .app-tagline { margin: 4px 90px 16px 0; }
+  .app-navigation { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .app-sidebar[data-menu-ready] .app-menu-toggle { display: inline-flex; position: absolute; top: 16px; right: 16px; align-items: center; min-height: 44px; padding: 10px 16px; border: 1px solid #64748b; border-radius: 8px; color: white; background: #1e293b; font: inherit; cursor: pointer; }
+  .app-sidebar[data-menu-ready]:not(.menu-open) .app-navigation { display: none; }
+}
+@media (max-width: 600px) {
+  .app-navigation { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .app-main { padding: 16px 12px; }
+  .app-main :is(.p-6, .p-8) { padding: 16px; }
+  .app-main :is(.px-6, .px-8) { padding-left: 16px; padding-right: 16px; }
+  .app-main .basic-stats { gap: 12px; }
 }

@@ -149,17 +149,17 @@
 
   <div class="overflow-x-auto">
 
-    <table class="w-full">
+    <table class="responsive-table w-full">
 
       <thead class="bg-slate-50 border-b border-slate-200">
         <tr class="text-left text-sm text-slate-500">
-          <th class="px-6 py-4">Turma</th>
-          <th class="px-6 py-4">Série</th>
-          <th class="px-6 py-4">Curso</th>
-          <th class="px-6 py-4">Alunos</th>
-          <th class="px-6 py-4">NFC</th>
-          <th class="px-6 py-4">Situação</th>
-          <th class="px-6 py-4 text-right">Ações</th>
+          <th scope="col" class="px-6 py-4">Turma</th>
+          <th scope="col" class="px-6 py-4">Série</th>
+          <th scope="col" class="px-6 py-4">Curso</th>
+          <th scope="col" class="px-6 py-4">Alunos</th>
+          <th scope="col" class="px-6 py-4">NFC</th>
+          <th scope="col" class="px-6 py-4">Situação</th>
+          <th scope="col" class="px-6 py-4 text-right">Ações</th>
         </tr>
       </thead>
 
@@ -169,17 +169,17 @@
 
           <tr class="hover:bg-slate-50 transition">
 
-            <td class="px-6 py-5">
+            <td data-label="Turma" class="px-6 py-5">
               <div class="font-semibold text-slate-900">
                 <%= turma.nome %>
               </div>
             </td>
 
-            <td class="px-6 py-5 text-slate-600">
+            <td data-label="Série" class="px-6 py-5 text-slate-600">
               <%= turma.serie.presence || "—" %>
             </td>
 
-            <td class="px-6 py-5">
+            <td data-label="Curso" class="px-6 py-5">
               <% if turma.curso.present? %>
                 <span class="bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold">
                   <%= turma.curso %>
@@ -189,13 +189,13 @@
               <% end %>
             </td>
 
-            <td class="px-6 py-5">
+            <td data-label="Alunos" class="px-6 py-5">
               <span class="font-semibold text-slate-800">
                 <%= turma.alunos.count %>
               </span>
             </td>
 
-            <td class="px-6 py-5">
+            <td data-label="NFC" class="px-6 py-5">
               <div class="flex items-center gap-2">
                 <span class="w-2 h-2 bg-emerald-500 rounded-full"></span>
 
@@ -206,7 +206,7 @@
               </div>
             </td>
 
-            <td class="px-6 py-5">
+            <td data-label="Situação" class="px-6 py-5">
 
               <% if turma.ativa? %>
 
@@ -225,7 +225,7 @@
 
             </td>
 
-            <td class="px-6 py-5 text-right">
+            <td data-label="Ações" class="px-6 py-5 text-right">
 
               <%= link_to "Abrir",
                   turma_path(turma),

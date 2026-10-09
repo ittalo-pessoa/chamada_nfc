@@ -274,30 +274,30 @@
       <!-- TABELA -->
       <div class="overflow-x-auto">
 
-        <table class="w-full">
+        <table class="responsive-table w-full">
 
           <thead>
             <tr class="bg-slate-50 border-b border-slate-200">
 
-              <th class="px-6 py-4 text-left
+              <th scope="col" class="px-6 py-4 text-left
                          text-xs font-semibold uppercase
                          tracking-wider text-slate-500">
                 Aluno
               </th>
 
-              <th class="px-6 py-4 text-left
+              <th scope="col" class="px-6 py-4 text-left
                          text-xs font-semibold uppercase
                          tracking-wider text-slate-500">
                 Pulseira NFC
               </th>
 
-              <th class="px-6 py-4 text-left
+              <th scope="col" class="px-6 py-4 text-left
                          text-xs font-semibold uppercase
                          tracking-wider text-slate-500">
                 Situação
               </th>
 
-              <th class="px-6 py-4 text-right
+              <th scope="col" class="px-6 py-4 text-right
                          text-xs font-semibold uppercase
                          tracking-wider text-slate-500">
                 Ações
@@ -314,7 +314,7 @@
               <tr class="group hover:bg-slate-50/80 transition">
 
                 <!-- ALUNO -->
-                <td class="px-6 py-4">
+                <td data-label="Aluno" class="px-6 py-4">
 
                   <div class="flex items-center gap-4">
 
@@ -367,7 +367,7 @@
 
 
                 <!-- NFC -->
-                <td class="px-6 py-4">
+                <td data-label="Pulseira NFC" class="px-6 py-4">
 
                   <% if aluno.nfc_uid.present? %>
 
@@ -438,7 +438,7 @@
 
 
                 <!-- STATUS -->
-                <td class="px-6 py-4">
+                <td data-label="Situação" class="px-6 py-4">
 
                   <% if aluno.ativo? %>
 
@@ -472,7 +472,7 @@
 
 
                 <!-- AÇÕES -->
-                <td class="px-6 py-4">
+                <td data-label="Ações" class="px-6 py-4">
 
                   <div class="flex items-center justify-end gap-2">
 

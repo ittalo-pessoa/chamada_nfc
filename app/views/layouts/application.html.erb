@@ -10,10 +10,11 @@
   </head>
   <body class="bg-slate-50 text-slate-800">
     <div class="app-shell">
-      <aside class="app-sidebar">
+      <aside class="app-sidebar" data-controller="navigation">
         <%= link_to "SmartChamada", root_path, class: "app-brand" %>
         <p class="app-tagline">Chamada NFC</p>
-        <nav class="app-navigation" aria-label="Menu principal">
+        <button type="button" class="app-menu-toggle" aria-expanded="false" aria-controls="menu-principal" data-navigation-target="toggle" data-action="navigation#toggle">Menu</button>
+        <nav id="menu-principal" class="app-navigation" aria-label="Menu principal">
           <% [["Dashboard", root_path, "dashboard"], ["Turmas", turmas_path, "turmas"], ["Alunos", alunos_path, "alunos"], ["Atividades", atividades_path, "atividades"], ["Presenças", presencas_path, "presencas"], ["Dispositivos", dispositivos_path, "dispositivos"], ["Relatórios", relatorios_path, "relatorios"], ["Parâmetros", parametros_path, "parametros"]].each do |label, path, name| %>
             <%= link_to label, path, class: (controller_name == name ? "is-active" : nil), aria: { current: (controller_name == name ? "page" : nil) } %>
           <% end %>

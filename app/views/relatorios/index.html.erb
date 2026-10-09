@@ -6,15 +6,15 @@
   <div class="basic-panel">
     <% if @atividades.any? %>
       <div class="basic-table-wrap">
-        <table class="basic-table">
-          <thead><tr><th scope="col">Atividade</th><th scope="col">Data</th><th scope="col">Presenças</th><th scope="col">Consulta</th></tr></thead>
+        <table class="responsive-table basic-table">
+          <thead><tr><th scope="col" scope="col">Atividade</th><th scope="col" scope="col">Data</th><th scope="col" scope="col">Presenças</th><th scope="col" scope="col">Consulta</th></tr></thead>
           <tbody>
             <% @atividades.each do |atividade| %>
               <tr>
-                <td><%= link_to atividade.nome, atividade_path(atividade) %></td>
-                <td><%= atividade.inicio&.strftime("%d/%m/%Y") || "Não definida" %></td>
-                <td><%= atividade.total_presencas %></td>
-                <td><%= link_to "Ver presenças", presencas_path(atividade_id: atividade.id) %></td>
+                <td data-label="Atividade"><%= link_to atividade.nome, atividade_path(atividade) %></td>
+                <td data-label="Data"><%= atividade.inicio&.strftime("%d/%m/%Y") || "Não definida" %></td>
+                <td data-label="Presenças"><%= atividade.total_presencas %></td>
+                <td data-label="Consulta"><%= link_to "Ver presenças", presencas_path(atividade_id: atividade.id) %></td>
               </tr>
             <% end %>
           </tbody>
